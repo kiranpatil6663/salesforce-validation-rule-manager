@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: sf-validation-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: SF_CONSUMER_KEY
+        sync: false
+      - key: SF_CONSUMER_SECRET
+        sync: false
+      - key: SF_LOGIN_URL
+        value: https://login.salesforce.com
+      - key: SF_CALLBACK_URL
+        sync: false
+      - key: NODE_VERSION
+        value: 20.0.0
+
+  - type: web
+    name: sf-validation-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://sf-validation-backend-6vlw.onrender.com
+        sync: false
