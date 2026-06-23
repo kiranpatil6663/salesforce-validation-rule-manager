@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom'
 import type { ValidationRule, DeployPayload } from '../types/salesforce'
 
 const DashboardPage = () => {
+ const API_URL = import.meta.env.VITE_API_URL
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
 
@@ -24,7 +25,7 @@ const DashboardPage = () => {
     setLoading(true)
     setMessage('')
     try {
-      const response = await fetch('http://localhost:5000/api/validation-rules', {
+      const response = await fetch(`${API_URL}/api/validation-rules`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'x-instance-url': decodeURIComponent(instance)
@@ -64,7 +65,7 @@ const DashboardPage = () => {
         Active: r.Active
       }))
 
-      const response = await fetch('http://localhost:5000/api/validation-rules/deploy', {
+     const response = await fetch(`${API_URL}/api/validation-rules/deploy`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

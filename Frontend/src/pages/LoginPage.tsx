@@ -1,17 +1,10 @@
 const LoginPage = () => {
 
-  // const handleLogin = async () => {
-  //   const response = await fetch('http://localhost:5000/auth/login')
-  //   const data = await response.json()
-  //   window.location.href = data.url
-  // }
-  const handleLogin = async () => {
+const handleLogin = async () => {
   try {
-    console.log('Attempting to reach backend...')
-    const response = await fetch('http://localhost:5000/auth/login')
-    console.log('Response status:', response.status)
+    const API_URL = import.meta.env.VITE_API_URL
+    const response = await fetch(`${API_URL}/auth/login`)
     const data = await response.json()
-    console.log('Data received:', data)
     window.location.href = data.url
   } catch (error) {
     console.error('Login failed:', error)
