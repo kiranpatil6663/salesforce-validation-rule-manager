@@ -12,11 +12,21 @@ const app: Application = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://salesforce-validation-rule-manager-rl4q.onrender.com'
+];
+
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://salesforce-validation-rule-manager-rl4q.onrender.com'
-  ],
+  origin: (incomingOrigin, callback) => {
+    if (!incomingOrigin) {
+      return callback(null, true);
+    }
+    if (allowedOrigins.includes(incomingOrigin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('CORS not allowed'), false);
+  },
   credentials: true
 }));
 
