@@ -3,9 +3,6 @@ import { fileURLToPath } from 'url';
 
 const envPath = fileURLToPath(new URL('../.env', import.meta.url));
 const dotenvResult = config({ path: envPath });
-console.log('dotenv path:', envPath);
-console.log('dotenv result:', dotenvResult);
-console.log('ENV CHECK:', process.env.SF_LOGIN_URL, process.env.SF_CONSUMER_KEY?.slice(0, 5));
 import express, { Application } from 'express';
 import cors from 'cors';
 import authRoutes from './routes/auth.js';
@@ -16,7 +13,10 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: [
+    'http://localhost:5173',
+    'https://salesforce-validation-rule-manager-rl4q.onrender.com'
+  ],
   credentials: true
 }));
 
